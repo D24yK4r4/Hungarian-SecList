@@ -1,0 +1,15 @@
+name: Check wordlists
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install hu_HU.UTF-8 locale
+        run: sudo locale-gen hu_HU.UTF-8
+      - name: Validate wordlists
+        run: python3 scripts/check.py
