@@ -1,0 +1,62 @@
+## hungarian.rule - mangling rules for Hungarian password candidates
+##
+## Use with any base wordlist, e.g.:
+##   hashcat -m 0 hashes.txt hungarian-passwords.txt -r rules/hungarian.rule
+##   hashcat -m 0 hashes.txt ascii/names-male.txt     -r rules/hungarian.rule
+##
+## Covers the habits visible in real Hungarian leaks: capitalising the first
+## letter, trailing ! , year suffixes centred on birth years and the
+## current decade, and the usual leetspeak. Lines beginning with # are
+## comments; : is the no-op (leave the word unchanged).
+
+# keep original + simple case toggles
+:
+l
+u
+c
+C
+
+# trailing punctuation
+$!
+$.
+$1
+c $!
+c $1
+
+# year suffixes - birth years (1950-2012) are the most common PIN/suffix
+$1 $9 $5 $0
+$1 $9 $6 $0
+$1 $9 $6 $5
+$1 $9 $7 $0
+$1 $9 $7 $5
+$1 $9 $8 $0
+$1 $9 $8 $5
+$1 $9 $9 $0
+$1 $9 $9 $5
+$1 $9 $9 $9
+$2 $0 $0 $0
+$2 $0 $0 $5
+$2 $0 $1 $0
+$2 $0 $1 $2
+c $1 $9 $8 $0
+c $1 $9 $9 $0
+c $2 $0 $0 $0
+
+# current-decade suffixes
+$2 $0 $2 $3
+$2 $0 $2 $4
+$2 $0 $2 $5
+$2 $0 $2 $6
+c $2 $0 $2 $4
+c $2 $0 $2 $5
+c $2 $0 $2 $6
+
+# short numeric suffixes
+$1 $2 $3
+$1 $2 $3 $4
+c $1 $2 $3
+
+# leetspeak (Hungarian vowels included)
+sa4 se3 so0 si1
+se3 so0
+sa@ se3
